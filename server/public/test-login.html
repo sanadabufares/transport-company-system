@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transport Company Login Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      min-height: 100px;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Transport Company Login Test</h1>
+    
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" value="admin">
+    </div>
+    
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" value="admin123">
+    </div>
+    
+    <div>
+      <label for="url">API URL:</label>
+      <input type="text" id="url" value="http://127.0.0.1:5000/api/auth/login">
+    </div>
+    
+    <button onclick="testLogin()">Test Login</button>
+    
+    <div class="result" id="result">
+      <p>Results will appear here...</p>
+    </div>
+  </div>
+
+  <script>
+    async function testLogin() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const url = document.getElementById('url').value;
+      const resultDiv = document.getElementById('result');
+      
+      resultDiv.innerHTML = '<p>Attempting login...</p>';
+      
+      try {
+        // Attempt login with fetch API
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+        });
+        
+        // Parse the JSON response
+        const data = await response.json();
+        
+        if (response.ok) {
+          // Success
+          resultDiv.innerHTML = `
+            <p class="success">✅ Login successful!</p>
+            <p>Token: ${data.token.substring(0, 20)}...</p>
+            <p>User: ${JSON.stringify(data.user)}</p>
+          `;
+          
+          // Test the auth/me endpoint with the token
+          const profileUrl = url.replace('/auth/login', '/auth/me');
+          resultDiv.innerHTML += `<p>Testing profile endpoint at ${profileUrl}...</p>`;
+          
+          const profileResponse = await fetch(profileUrl, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${data.token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          const profileData = await profileResponse.json();
+          
+          if (profileResponse.ok) {
+            resultDiv.innerHTML += `
+              <p class="success">✅ Profile loaded successfully!</p>
+              <p>User: ${JSON.stringify(profileData.user)}</p>
+            `;
+          } else {
+            resultDiv.innerHTML += `
+              <p class="error">❌ Failed to load profile: ${profileData.message}</p>
+            `;
+          }
+        } else {
+          // Error
+          resultDiv.innerHTML = `
+            <p class="error">❌ Login failed: ${data.message}</p>
+            <p>Status code: ${response.status}</p>
+          `;
+        }
+      } catch (error) {
+        // Network or other error
+        resultDiv.innerHTML = `
+          <p class="error">❌ Error: ${error.message}</p>
+          <p>This could be a CORS or network issue.</p>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>

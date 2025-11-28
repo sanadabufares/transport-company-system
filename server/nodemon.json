@@ -1,0 +1,21 @@
+{
+  "watch": [
+    "**/*.js"
+  ],
+  "ext": "js json env",
+  "legacyWatch": true,
+  "ignore": [
+    "node_modules",
+    ".git",
+    "test*.js",
+    "debug*.js",
+    "check*.js"
+  ],
+  "delay": "500ms",
+  "verbose": true,
+  "restartable": "rs",
+  "env": {
+    "NODE_ENV": "development",
+    "PORT": "5000"
+  }
+}

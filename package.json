@@ -1,0 +1,31 @@
+{
+  "name": "transport-company",
+  "version": "1.0.0",
+  "description": "Transport Company Application",
+  "main": "index.js",
+  "scripts": {
+    "start:server": "cd server && npm start",
+    "start:client": "cd client && npm start",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "test:server": "cd server && npm test",
+    "test:client": "cd client && npm test",
+    "test": "node run-all-tests.js",
+    "test:integration": "node run-integration-tests.js",
+    "setup-test-db": "cd server && npm run setup-test-db"
+  },
+  "keywords": [
+    "transport",
+    "company",
+    "driver",
+    "trips"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/parser": "^7.28.5",
+    "@babel/traverse": "^7.28.5",
+    "concurrently": "^8.2.2",
+    "officegen": "^0.6.5",
+    "xlsx": "^0.18.5"
+  }
+}
