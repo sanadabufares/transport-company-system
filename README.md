@@ -1,4 +1,4 @@
-# Transport Company Application
+# Transport Company Web System
 
 A comprehensive application for managing transportation services between companies and drivers.
 
@@ -20,8 +20,8 @@ A comprehensive application for managing transportation services between compani
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/TransportCompany.git
-cd TransportCompany
+git clone https://github.com/sanadabufares/transport-company-system.git
+cd transport-company-system
 ```
 
 2. Install dependencies:
@@ -125,7 +125,8 @@ After running tests, coverage reports will be generated in the `test-reports` di
 
 ## Test Plan
 
-See the [TEST_PLAN.md](./TEST_PLAN.md) file for a comprehensive testing strategy.
+See the TEST_PLAN.md
+ file for a comprehensive testing strategy.
 
 ## Features
 
@@ -133,10 +134,11 @@ See the [TEST_PLAN.md](./TEST_PLAN.md) file for a comprehensive testing strategy
 - Company trip management
 - Driver availability management
 - Trip request system
-- Real-time notifications
+- Status updates
 - Rating system
-- Comprehensive reporting
+- Basic reporting tools
 
 ## License
 
-This project is licensed under the ISC License.
+License: ISC
+
